@@ -13,6 +13,10 @@ import cv2
 # Get a reference to webcam #0 (the default one)
 video_capture = cv2.VideoCapture(0)
 
+# Define the codec and create VideoWriter object
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+out = cv2.VideoWriter('output.avi',fourcc, 20.0, (640,480))
+
 # Load a sample picture and learn how to recognize it.
 my_image = face_recognition.load_image_file("suspects/Vyom.jpg")
 my_face_encoding = face_recognition.face_encodings(my_image)[0]
@@ -68,6 +72,9 @@ while True:
 
     # Display the resulting image
     cv2.imshow('Video', frame)
+    
+    # write the flipped frame
+    out.write(frame)
 
     # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord('q'):
